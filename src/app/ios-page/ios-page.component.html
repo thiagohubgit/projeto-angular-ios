@@ -27,7 +27,7 @@
       <section class="settings-section" [attr.aria-labelledby]="'section-' + section.title">
         <h2 class="section-title" [id]="'section-' + section.title">{{ section.title }}</h2>
         
-        <div class="section-content" role="list">
+        <div class="section-content">
           <ng-container *ngFor="let item of section.items; let last = last">
             <!-- Button Item (com seta) -->
             <button *ngIf="item.hasArrow"
@@ -35,8 +35,7 @@
                [class.last-item]="last"
                type="button"
                (click)="handleItemClick(item)"
-               [attr.aria-label]="item.label + ' - ' + section.title"
-               role="menuitem">
+               [attr.aria-label]="item.label + ' - ' + section.title">
               <div class="item-left">
                 <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
                 <span class="item-label">{{ item.label }}</span>
@@ -47,8 +46,7 @@
             <!-- Toggle Item (Bloqueio temporário) -->
             <div *ngIf="item.hasToggle"
                class="menu-item toggle-item" 
-               [class.last-item]="last"
-               role="listitem">
+               [class.last-item]="last">
               <label class="toggle-item-label" 
                      [for]="'toggle-' + item.id"
                      [attr.aria-describedby]="'section-' + section.title">
