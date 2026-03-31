@@ -24,21 +24,33 @@
       <h2 class="section-title">{{ section.title }}</h2>
       
       <div class="section-content" role="region" [attr.aria-label]="section.title">
-        <div *ngFor="let item of section.items; let last = last" 
-             class="menu-item" 
+        <ng-container *ngFor="let item of section.items; let last = last">
+          <!-- Button Item (com seta) -->
+          <button *ngIf="item.hasArrow"
+             class="menu-button" 
+             [class.last-item]="last"
+             type="button"
+             (click)="handleItemClick(item)"
+             [attr.aria-label]="item.label">
+            <div class="item-left">
+              <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
+              <span class="item-label">{{ item.label }}</span>
+            </div>
+            <div class="arrow-icon" aria-hidden="true">›</div>
+          </button>
+
+          <!-- Toggle Item (Bloqueio temporário) -->
+          <div *ngIf="item.hasToggle"
+             class="menu-item toggle-item" 
              [class.last-item]="last"
              role="listitem">
-          
-          <!-- Item Content -->
-          <div class="item-left">
-            <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
-            <label [for]="'item-' + item.id" class="item-label">{{ item.label }}</label>
-          </div>
-
-          <!-- Item Right (Toggle or Arrow) -->
-          <div class="item-right">
-            <!-- Toggle (Bloqueio temporário) -->
-            <div *ngIf="item.hasToggle" class="toggle-wrapper">
+            <label class="toggle-item-label" [for]="'item-' + item.id">
+              <div class="item-left">
+                <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
+                <span class="item-label">{{ item.label }}</span>
+              </div>
+            </label>
+            <div class="toggle-wrapper">
               <input 
                 type="checkbox" 
                 [checked]="item.enabled"
@@ -50,11 +62,8 @@
               <label [for]="'item-' + item.id" class="toggle-switch" aria-hidden="true"></label>
               <span class="sr-only">{{ item.enabled ? 'Ativado' : 'Desativado' }}</span>
             </div>
-
-            <!-- Arrow (Alterar/Cancelar/Excluir) -->
-            <div *ngIf="item.hasArrow" class="arrow-icon" aria-hidden="true">›</div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>

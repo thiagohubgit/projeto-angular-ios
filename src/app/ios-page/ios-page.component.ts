@@ -53,6 +53,12 @@ export class IosPageComponent {
     }
   }
 
+  handleItemClick(item: MenuItem): void {
+    if (item.hasArrow) {
+      console.log(`Clicou em: ${item.label}`);
+    }
+  }
+
   goBack(): void {
     console.log('Voltar');
   }
