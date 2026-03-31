@@ -2,10 +2,18 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface ListItem {
+interface MenuItem {
   id: number;
   label: string;
-  enabled: boolean;
+  icon: string;
+  hasArrow?: boolean;
+  hasToggle?: boolean;
+  enabled?: boolean;
+}
+
+interface Section {
+  title: string;
+  items: MenuItem[];
 }
 
 @Component({
@@ -16,14 +24,36 @@ interface ListItem {
   styleUrls: ['./ios-page.component.css']
 })
 export class IosPageComponent {
-  items: ListItem[] = [
-    { id: 1, label: 'WiFi', enabled: true },
-    { id: 2, label: 'Bluetooth', enabled: false },
-    { id: 3, label: 'Modo Avião', enabled: false },
-    { id: 4, label: 'Notificações', enabled: true }
+  sections: Section[] = [
+    {
+      title: 'Segurança',
+      items: [
+        { id: 1, label: 'Alterar senha', icon: '✏️', hasArrow: true }
+      ]
+    },
+    {
+      title: 'Cartão físico',
+      items: [
+        { id: 2, label: 'Bloqueio temporário', icon: '🔒', hasToggle: true, enabled: true },
+        { id: 3, label: 'Cancelar cartão', icon: '🗑️', hasArrow: true }
+      ]
+    },
+    {
+      title: 'Cartão virtual',
+      items: [
+        { id: 4, label: 'Bloqueio temporário', icon: '🔒', hasToggle: true, enabled: true },
+        { id: 5, label: 'Excluir cartão', icon: '🗑️', hasArrow: true }
+      ]
+    }
   ];
 
-  toggleItem(item: ListItem): void {
-    item.enabled = !item.enabled;
+  toggleItem(item: MenuItem): void {
+    if (item.hasToggle) {
+      item.enabled = !item.enabled;
+    }
+  }
+
+  goBack(): void {
+    console.log('Voltar');
   }
 }

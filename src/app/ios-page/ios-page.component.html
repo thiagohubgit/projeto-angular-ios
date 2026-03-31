@@ -1,53 +1,61 @@
-<div class="ios-container" role="application" aria-label="Página de Configurações iOS">
+<div class="ios-container" role="application" aria-label="Página de Segurança">
   <!-- Status Bar iOS -->
   <div class="status-bar" role="status" aria-live="polite">
-    <span class="time" aria-label="Hora: 9 e 41">9:41</span>
+    <span class="time" aria-label="Hora: 12 e 09">12:09</span>
     <div class="status-icons" aria-label="Status do sistema">
       <span aria-label="Sinal de celular forte">📶</span>
-      <span aria-label="Dados móveis conectado">📡</span>
       <span aria-label="Bateria em bom estado">🔋</span>
     </div>
   </div>
 
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <button class="back-button" (click)="goBack()" aria-label="Voltar">
+      <span>&lt;</span>
+    </button>
+    <h1 class="page-title">Segurança</h1>
+    <div class="spacer"></div>
+  </div>
+
   <!-- Main Content -->
   <div class="content">
-    <!-- Header with Title -->
-    <header class="header">
-      <h1>Configurações</h1>
-    </header>
+    <!-- Sections -->
+    <div *ngFor="let section of sections" class="section">
+      <h2 class="section-title">{{ section.title }}</h2>
+      
+      <div class="section-content" role="region" [attr.aria-label]="section.title">
+        <div *ngFor="let item of section.items; let last = last" 
+             class="menu-item" 
+             [class.last-item]="last"
+             role="listitem">
+          
+          <!-- Item Content -->
+          <div class="item-left">
+            <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
+            <label [for]="'item-' + item.id" class="item-label">{{ item.label }}</label>
+          </div>
 
-    <!-- Description Text -->
-    <p class="description">
-      Esta é uma simulação de interface iOS com alternadores (toggles) para habilitar ou desabilitar recursos do sistema.
-    </p>
+          <!-- Item Right (Toggle or Arrow) -->
+          <div class="item-right">
+            <!-- Toggle (Bloqueio temporário) -->
+            <div *ngIf="item.hasToggle" class="toggle-wrapper">
+              <input 
+                type="checkbox" 
+                [checked]="item.enabled"
+                (change)="toggleItem(item)"
+                class="toggle-input"
+                [id]="'item-' + item.id"
+                [attr.aria-label]="item.label + (item.enabled ? ' ativado' : ' desativado')"
+                [attr.aria-checked]="item.enabled">
+              <label [for]="'item-' + item.id" class="toggle-switch" aria-hidden="true"></label>
+              <span class="sr-only">{{ item.enabled ? 'Ativado' : 'Desativado' }}</span>
+            </div>
 
-    <!-- Settings List with Toggles -->
-    <div class="settings-list" role="region" aria-label="Lista de configurações">
-      <div *ngFor="let item of items; let last = last" 
-           class="list-item" 
-           [class.last-item]="last"
-           role="listitem">
-        <div class="item-content">
-          <label [for]="'toggle-' + item.id" class="item-label">{{ item.label }}</label>
-        </div>
-        <div class="toggle-wrapper">
-          <input 
-            type="checkbox" 
-            [checked]="item.enabled"
-            (change)="toggleItem(item)"
-            class="toggle-input"
-            [id]="'toggle-' + item.id"
-            [attr.aria-label]="item.label + (item.enabled ? ' habilitado' : ' desabilitado')"
-            [attr.aria-checked]="item.enabled">
-          <label [for]="'toggle-' + item.id" class="toggle-switch" aria-hidden="true"></label>
-          <span class="sr-only">{{ item.enabled ? 'Habilitado' : 'Desabilitado' }}</span>
+            <!-- Arrow (Alterar/Cancelar/Excluir) -->
+            <div *ngIf="item.hasArrow" class="arrow-icon" aria-hidden="true">›</div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Footer Info -->
-    <p class="footer-info">
-      Versão 1.0.0 • Projeto Angular iOS Simulator
-    </p>
   </div>
 </div>
