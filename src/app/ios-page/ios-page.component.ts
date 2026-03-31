@@ -9,6 +9,7 @@ interface MenuItem {
   hasArrow?: boolean;
   hasToggle?: boolean;
   enabled?: boolean;
+  description?: string;
 }
 
 interface Section {
@@ -34,14 +35,28 @@ export class IosPageComponent {
     {
       title: 'Cartão físico',
       items: [
-        { id: 2, label: 'Bloqueio temporário', icon: '🔒', hasToggle: true, enabled: true },
+        { 
+          id: 2, 
+          label: 'Bloqueio temporário', 
+          icon: '🔒', 
+          hasToggle: true, 
+          enabled: true,
+          description: 'Cartão físico'
+        },
         { id: 3, label: 'Cancelar cartão', icon: '🗑️', hasArrow: true }
       ]
     },
     {
       title: 'Cartão virtual',
       items: [
-        { id: 4, label: 'Bloqueio temporário', icon: '🔒', hasToggle: true, enabled: true },
+        { 
+          id: 4, 
+          label: 'Bloqueio temporário', 
+          icon: '🔒', 
+          hasToggle: true, 
+          enabled: true,
+          description: 'Cartão virtual'
+        },
         { id: 5, label: 'Excluir cartão', icon: '🗑️', hasArrow: true }
       ]
     }

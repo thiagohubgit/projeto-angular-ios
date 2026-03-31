@@ -10,61 +10,69 @@
 
   <!-- Navigation Header -->
   <div class="nav-header">
-    <button class="back-button" (click)="goBack()" aria-label="Voltar">
-      <span>&lt;</span>
+    <button class="back-button" 
+            (click)="goBack()" 
+            aria-label="Voltar para tela anterior"
+            type="button">
+      <span aria-hidden="true">&lt;</span>
     </button>
     <h1 class="page-title">Segurança</h1>
     <div class="spacer"></div>
   </div>
 
   <!-- Main Content -->
-  <div class="content">
+  <main class="content">
     <!-- Sections -->
-    <div *ngFor="let section of sections" class="section">
-      <h2 class="section-title">{{ section.title }}</h2>
-      
-      <div class="section-content" role="region" [attr.aria-label]="section.title">
-        <ng-container *ngFor="let item of section.items; let last = last">
-          <!-- Button Item (com seta) -->
-          <button *ngIf="item.hasArrow"
-             class="menu-button" 
-             [class.last-item]="last"
-             type="button"
-             (click)="handleItemClick(item)"
-             [attr.aria-label]="item.label">
-            <div class="item-left">
-              <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
-              <span class="item-label">{{ item.label }}</span>
-            </div>
-            <div class="arrow-icon" aria-hidden="true">›</div>
-          </button>
-
-          <!-- Toggle Item (Bloqueio temporário) -->
-          <div *ngIf="item.hasToggle"
-             class="menu-item toggle-item" 
-             [class.last-item]="last"
-             role="listitem">
-            <label class="toggle-item-label" [for]="'item-' + item.id">
+    <ng-container *ngFor="let section of sections">
+      <section class="settings-section" [attr.aria-labelledby]="'section-' + section.title">
+        <h2 class="section-title" [id]="'section-' + section.title">{{ section.title }}</h2>
+        
+        <div class="section-content" role="list">
+          <ng-container *ngFor="let item of section.items; let last = last">
+            <!-- Button Item (com seta) -->
+            <button *ngIf="item.hasArrow"
+               class="menu-button" 
+               [class.last-item]="last"
+               type="button"
+               (click)="handleItemClick(item)"
+               [attr.aria-label]="item.label + ' - ' + section.title"
+               role="menuitem">
               <div class="item-left">
                 <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
                 <span class="item-label">{{ item.label }}</span>
               </div>
-            </label>
-            <div class="toggle-wrapper">
-              <input 
-                type="checkbox" 
-                [checked]="item.enabled"
-                (change)="toggleItem(item)"
-                class="toggle-input"
-                [id]="'item-' + item.id"
-                [attr.aria-label]="item.label + (item.enabled ? ' ativado' : ' desativado')"
-                [attr.aria-checked]="item.enabled">
-              <label [for]="'item-' + item.id" class="toggle-switch" aria-hidden="true"></label>
-              <span class="sr-only">{{ item.enabled ? 'Ativado' : 'Desativado' }}</span>
+              <div class="arrow-icon" aria-hidden="true">›</div>
+            </button>
+
+            <!-- Toggle Item (Bloqueio temporário) -->
+            <div *ngIf="item.hasToggle"
+               class="menu-item toggle-item" 
+               [class.last-item]="last"
+               role="listitem">
+              <label class="toggle-item-label" 
+                     [for]="'toggle-' + item.id"
+                     [attr.aria-describedby]="'section-' + section.title">
+                <div class="item-left">
+                  <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
+                  <span class="item-label">{{ item.label }}</span>
+                </div>
+              </label>
+              <div class="toggle-wrapper">
+                <input 
+                  type="checkbox" 
+                  [checked]="item.enabled"
+                  (change)="toggleItem(item)"
+                  class="toggle-input"
+                  [id]="'toggle-' + item.id"
+                  role="switch"
+                  [attr.aria-label]="item.label + ' de ' + section.title + (item.enabled ? ' ativado' : ' desativado')"
+                  [attr.aria-checked]="item.enabled">
+                <label [for]="'toggle-' + item.id" class="toggle-switch" aria-hidden="true"></label>
+              </div>
             </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-  </div>
+          </ng-container>
+        </div>
+      </section>
+    </ng-container>
+  </main>
 </div>
