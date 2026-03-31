@@ -1,0 +1,53 @@
+<div class="ios-container" role="application" aria-label="Página de Configurações iOS">
+  <!-- Status Bar iOS -->
+  <div class="status-bar" role="status" aria-live="polite">
+    <span class="time" aria-label="Hora: 9 e 41">9:41</span>
+    <div class="status-icons" aria-label="Status do sistema">
+      <span aria-label="Sinal de celular forte">📶</span>
+      <span aria-label="Dados móveis conectado">📡</span>
+      <span aria-label="Bateria em bom estado">🔋</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Header with Title -->
+    <header class="header">
+      <h1>Configurações</h1>
+    </header>
+
+    <!-- Description Text -->
+    <p class="description">
+      Esta é uma simulação de interface iOS com alternadores (toggles) para habilitar ou desabilitar recursos do sistema.
+    </p>
+
+    <!-- Settings List with Toggles -->
+    <div class="settings-list" role="region" aria-label="Lista de configurações">
+      <div *ngFor="let item of items; let last = last" 
+           class="list-item" 
+           [class.last-item]="last"
+           role="listitem">
+        <div class="item-content">
+          <label [for]="'toggle-' + item.id" class="item-label">{{ item.label }}</label>
+        </div>
+        <div class="toggle-wrapper">
+          <input 
+            type="checkbox" 
+            [checked]="item.enabled"
+            (change)="toggleItem(item)"
+            class="toggle-input"
+            [id]="'toggle-' + item.id"
+            [attr.aria-label]="item.label + (item.enabled ? ' habilitado' : ' desabilitado')"
+            [attr.aria-checked]="item.enabled">
+          <label [for]="'toggle-' + item.id" class="toggle-switch" aria-hidden="true"></label>
+          <span class="sr-only">{{ item.enabled ? 'Habilitado' : 'Desabilitado' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Info -->
+    <p class="footer-info">
+      Versão 1.0.0 • Projeto Angular iOS Simulator
+    </p>
+  </div>
+</div>
