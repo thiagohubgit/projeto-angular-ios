@@ -16,7 +16,7 @@
             type="button">
       <span aria-hidden="true">&lt;</span>
     </button>
-    <h1 class="page-title">Segurança</h1>
+    <h1 class="page-title" id="page-main-title">Segurança</h1>
     <div class="spacer"></div>
   </div>
 
@@ -48,8 +48,7 @@
                class="menu-item toggle-item" 
                [class.last-item]="last">
               <label class="toggle-item-label" 
-                     [for]="'toggle-' + item.id"
-                     [attr.aria-describedby]="'section-' + section.title">
+                     [for]="'toggle-' + item.id">
                 <div class="item-left">
                   <span class="item-icon" aria-hidden="true">{{ item.icon }}</span>
                   <span class="item-label">{{ item.label }}</span>
@@ -63,7 +62,7 @@
                   class="toggle-input"
                   [id]="'toggle-' + item.id"
                   role="switch"
-                  [attr.aria-label]="item.label + ' de ' + section.title + (item.enabled ? ' ativado' : ' desativado')"
+                  [attr.aria-label]="item.label + ' de ' + item.description + (item.enabled ? ' ativado' : ' desativado')"
                   [attr.aria-checked]="item.enabled">
                 <label [for]="'toggle-' + item.id" class="toggle-switch" aria-hidden="true"></label>
               </div>
